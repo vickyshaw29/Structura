@@ -17,9 +17,10 @@ export async function createNewDocument() {
     .collection('rooms')
     .doc(docRef.id)
     .set({
-        userId: "owner",
+        userId: sessionClaims?.email!,
         createdAt: new Date(),
-        roomId: docRef.id
+        roomId: docRef.id,
+        role: "owner"
     })
 
     return { docId:docRef.id }
