@@ -8,6 +8,10 @@ export async function createNewDocument() {
 
     const { sessionClaims } = await auth();
 
+    if(!sessionClaims?.email) {
+        throw new Error("No email found in session");
+    }
+
     const docCollectiionRef = adnminDb.collection("documents");
     const docRef = await docCollectiionRef.add({
         title: "New Doc"

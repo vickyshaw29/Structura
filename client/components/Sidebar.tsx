@@ -14,6 +14,7 @@ import { useUser } from "@clerk/nextjs";
 import { collection, collectionGroup, DocumentData, query, where } from "firebase/firestore";
 import { db } from "@/firebase";
 import { useEffect, useState } from "react";
+import SideBarOption from "./SideBarOption";
 
 interface RoomDocument extends DocumentData {
   createdAt: string;
@@ -35,25 +36,52 @@ const Sidebar = () => {
   
 
   const [data, loading, error] = useCollection(queryRooms);
+  useEffect(()=>{
+    if(!data) return;
+    const grouped = data?.docs?.reduce<{owner: RoomDocument[];editor:RoomDocument[];}>((acc, curr)=>{
+      const roomData = curr.data() as RoomDocument;
+      if(roomData.role === "owner"){
+        acc.owner.push({
+          id: curr.id,
+          ...roomData
+        })
+      }else{
+        acc.editor.push({
+          id:curr.id,
+          ...roomData   
+        })
+      }
+      return acc;
+  }, { owner: [], editor: [] });
+  setGroupedData(grouped);
+  },[data])  
 
 
   
   const menuOptions = ( 
     <>
       <NewDocumentButton/>
-      {groupedData?.owner.length === 0 ? (
-        <h2>No documents found</h2>
-      ):(
+      <div className="flex py-4 flex-col space-y-4 md:max-w-36">
+        {groupedData?.owner.length === 0 ? (
+          <h2 className="text-gray-500 font-semibold text-sm">No documents found</h2>
+        ):(
+          <>
+            <h2 className="text-gray-500 font-semibold text-sm">My Documents</h2> 
+            {groupedData?.owner?.map((doc, index)=>(
+              <SideBarOption key={doc.id} id={doc.id} href={`/doc/${doc.id}`} />
+            ))}  
+          </>
+        )}
+      </div>
+      {/* Shared with me */}
+      {groupedData?.editor?.length >0 && (
         <>
-          <h2>My Documents</h2> 
-          {groupedData?.owner?.map((doc, index)=>(
-            <p key={index}>{doc.roomId}</p>
-            // <SideBarOption key={doc.id} id={doc.id} href={`/doc/${doc.id}`}
-          ))}  
+          <h2 className="text-gray-500 font-semibold text-sm">Shared with me</h2>
+          {groupedData?.editor?.map((doc)=>(
+              <SideBarOption key={doc.id} id={doc.id} href={`/doc/${doc.id}`} />
+          ))}
         </>
-
       )}
-      {/* Other options */}
     </>
   )
 
@@ -91,18 +119,16 @@ const Sidebar = () => {
           <MenuIcon className="p-2 hover:opacity-30 rounded-lg cursor-pointer" size={40}/>
         </SheetTrigger>
         <SheetContent className="" side="left">
+        <SheetTitle></SheetTitle>
           <SheetHeader>
-            <SheetTitle>Menu</SheetTitle>
-            <div>
+            {/* <SheetTitle>Menu</SheetTitle> */}
+            <div className="">
                 {menuOptions}
             </div>
           </SheetHeader>
         </SheetContent>
       </Sheet>
-
-      <div className="hidden md:inline">
-        <NewDocumentButton />
-      </div>
+      <div className="hidden md:flex flex-col">{menuOptions}</div>
     </div>
   );
 };
