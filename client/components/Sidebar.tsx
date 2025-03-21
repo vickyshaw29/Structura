@@ -36,6 +36,25 @@ const Sidebar = () => {
   
 
   const [data, loading, error] = useCollection(queryRooms);
+  useEffect(()=>{
+    if(!data) return;
+    const grouped = data?.docs?.reduce<{owner: RoomDocument[];editor:RoomDocument[];}>((acc, curr)=>{
+      const roomData = curr.data() as RoomDocument;
+      if(roomData.role === "owner"){
+        acc.owner.push({
+          id: curr.id,
+          ...roomData
+        })
+      }else{
+        acc.editor.push({
+          id:curr.id,
+          ...roomData   
+        })
+      }
+      return acc;
+  }, { owner: [], editor: [] });
+  setGroupedData(grouped);
+  },[data])  
 
 
   
