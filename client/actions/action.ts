@@ -1,6 +1,6 @@
 "use server";
 
-import { adnminDb } from "@/firebase-admin";
+import { adminnDb } from "@/firebase-admin";
 import { auth } from "@clerk/nextjs/server" ;
 
 export async function createNewDocument() {
@@ -12,11 +12,11 @@ export async function createNewDocument() {
         throw new Error("No email found in session");
     }
 
-    const docCollectiionRef = adnminDb.collection("documents");
+    const docCollectiionRef = adminnDb.collection("documents");
     const docRef = await docCollectiionRef.add({
         title: "New Doc"
     })
-    await adnminDb.collection('users')
+    await adminnDb.collection('users')
     .doc(sessionClaims?.email!)
     .collection('rooms')
     .doc(docRef.id)

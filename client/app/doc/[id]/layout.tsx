@@ -1,14 +1,26 @@
-import { auth } from "@clerk/nextjs/server"
-import { useParams } from "next/navigation";
+import RoomProvider from "@/components/RoomProvider";
+import { auth } from "@clerk/nextjs/server";
 
-const DocLayout = ({children}:{children:React.ReactNode}) => {
-    const { id } = useParams();
-    auth.protect();
+const DocLayout = async ({
+  children,
+  params,
+}: {
+  children: React.ReactNode;
+  params: { id: string };
+}) => {
+  // Ensure authentication before accessing params
+  await auth.protect();
+
+  // Wait for params to be available
+  const resolvedParams = await params;
+
+  console.log(resolvedParams, "params from DocLayout");
+
   return (
-    <div>
-        {children}
-    </div>
-  )
-}
+    <RoomProvider roomId={resolvedParams.id}>
+      {children}
+    </RoomProvider>
+  );
+};
 
-export default DocLayout
+export default DocLayout;
