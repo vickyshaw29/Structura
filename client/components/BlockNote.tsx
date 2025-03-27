@@ -22,9 +22,9 @@ const BlockNote = ({doc, provider, darkMode}:{doc:Y.Doc, provider:LiveblocksYjsP
     }
   })
   return (
-    <div className='relative max-w-6xl mx-auto'>
+    <div className='relative max-w-6xl mx-auto '>
         <BlockNoteView
-            className='min-h-screen'
+            className="h-full flex-1"
             editor={editor}
             theme={darkMode ? "dark" :"light"}
         />
