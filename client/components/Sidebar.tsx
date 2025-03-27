@@ -108,7 +108,6 @@ const Sidebar = () => {
       return acc;
     }, { owner: [], editor: [] });
 
-    console.log({grouped}, "grouped data...")
     setGroupedData(grouped);
   },[data])
 

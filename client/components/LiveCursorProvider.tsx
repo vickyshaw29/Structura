@@ -22,7 +22,6 @@ const LiveCursorProvider = ({ children }: { children: React.ReactNode }) => {
       {others
         ?.filter((other) => other.presence.cursor !== null)
         ?.map(({ connectionId, presence, info }) => {
-          console.log({ presence }, "presence");
           return (
             <FollowPointer
               key={connectionId}
