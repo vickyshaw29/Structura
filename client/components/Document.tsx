@@ -11,6 +11,7 @@ import useOwner from "@/lib/useOwner"
 import DeleteDocument from "./DeleteDocument"
 import InviteUser from "./InviteUser"
 import ManageUsers from "./ManageUsers"
+import Avatars from "./Avatars"
 
 const Document = ({id}:{id:string}) => {
   const [inputValue, setInputValue] = useState<string>("")
@@ -61,6 +62,7 @@ const Document = ({id}:{id:string}) => {
             {/* ManageUsers */}
               <ManageUsers/>
             {/* Avatars */}
+            <Avatars/>
         </div>
 
         <hr className="pb-10 max-w-6xl mx-auto mt-4"/>
