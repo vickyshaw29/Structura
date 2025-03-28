@@ -10,6 +10,7 @@ import CollaborativeEditor from "./CollaborativeEditor"
 import useOwner from "@/lib/useOwner"
 import DeleteDocument from "./DeleteDocument"
 import InviteUser from "./InviteUser"
+import ManageUsers from "./ManageUsers"
 
 const Document = ({id}:{id:string}) => {
   const [inputValue, setInputValue] = useState<string>("")
@@ -56,13 +57,13 @@ const Document = ({id}:{id:string}) => {
               )}
           </form>
        </div>
-        <div>
+        <div className="flex max-w-6xl mx-auto justify-between items-center mb-5">
             {/* ManageUsers */}
-
+              <ManageUsers/>
             {/* Avatars */}
         </div>
 
-        <hr className="pb-10 max-w-6xl mx-auto"/>
+        <hr className="pb-10 max-w-6xl mx-auto mt-4"/>
 
         {/* Collaborative editor */}
         <CollaborativeEditor/>

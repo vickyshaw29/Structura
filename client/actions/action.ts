@@ -74,3 +74,21 @@ export async function inviteUserToDocument (roomId:string, email:string){
         return {success:false};
     }
 }
+
+export async function removeUserFromDocument(roomId:string, email:string){
+    auth.protect();
+    console.log("removeUserFromDocument" , roomId, email);
+    try {
+        await adminnDb
+        .collection("users")
+        .doc(email)
+        .collection("rooms")
+        .doc(roomId)
+        .delete();
+
+        return {success:true}
+    } catch (error) {
+        console.log(error);
+        return {success:false}
+    }
+}

@@ -37,7 +37,7 @@ export default function RootLayout({
              <Sidebar/>
              <div className="flex-1 p-4 bg-gray-100 overflow-y-auto scrollbar-hide">{children}</div>
           </div>
-          <Toaster/>
+          <Toaster position="top-center"/>
         </body>
       </html>
     </ClerkProvider>
