@@ -251,9 +251,7 @@ body {
     @apply bg-background text-foreground;
   }
 
-  /* .bn-container {
-    min-height: 100vh !important;
-    background-color: white;
-  } */
-  
+  .bn-collaboration-cursor__label{
+    color: white !important; 
+  }
 }
