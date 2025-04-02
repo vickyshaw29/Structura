@@ -1,8 +1,6 @@
 
 https://github.com/user-attachments/assets/2d591668-a7df-420d-ab98-9d004d063d19
 
--a000-4998-a3ba-519df53cfe70
-
 # Structura
 
 **Structura** is a powerful, collaborative, and real-time note-taking app inspired by Notion. It supports rich text editing, multi-user collaboration, and seamless authentication.
