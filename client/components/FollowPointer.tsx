@@ -16,6 +16,7 @@ const FollowPointer = ({
   const yOffset = -35 // Moves the name slightly above the cursor
 
 
+
   return (
     <motion.div
       className="h-4 w-4 rounded-full absolute z-50"

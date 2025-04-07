@@ -4,6 +4,7 @@ import Link from "next/link";
 import { doc } from "firebase/firestore";
 import { useDocumentData } from "react-firebase-hooks/firestore";
 import { usePathname } from "next/navigation";
+import { cn } from "@/lib/utils";
 
 const SideBarOption = ({href, id}:{href:string; id:string}) => {
   const docRef = doc(db, "documents", id);
@@ -14,9 +15,18 @@ const SideBarOption = ({href, id}:{href:string; id:string}) => {
   if(!data) return null ;
 
   return (
-    <Link href={href} className={`border p-2 rounded-md ${isActive ? 'bg-gray-300 font-bold border-black': 'border-gray-400'}`}>
-        <p className="truncate">{data?.title}</p>
-    </Link>
+    <Link href={href}>
+    <div
+      className={cn(
+        "w-full px-3 py-2 rounded-md text-sm font-medium cursor-pointer transition-colors truncate mb-2",
+        isActive
+          ? "bg-gray-200 font-semibold text-black"
+          : "hover:bg-gray-100 text-gray-700"
+      )}
+    >
+      📄 {data.title || "Untitled"}
+    </div>
+  </Link>
   )
 }
 

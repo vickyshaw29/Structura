@@ -239,21 +239,19 @@ body {
 
   --color-sidebar-ring: var(--sidebar-ring);
 
-  
 }
 
 @layer base {
   * {
     @apply border-border outline-ring/50;
-    
+    font-family: var(--font-space-grotesk), sans-serif;
+
   }
   body {
     @apply bg-background text-foreground;
   }
 
-  /* .bn-container {
-    min-height: 100vh !important;
-    background-color: white;
-  } */
-  
+  .bn-collaboration-cursor__label{
+    color: white !important; 
+  }
 }

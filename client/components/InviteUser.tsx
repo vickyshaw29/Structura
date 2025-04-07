@@ -49,6 +49,7 @@ const InviteUser = () => {
         <Button variant={"outline"}>Invite</Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
+      <AlertDialogTitle></AlertDialogTitle>
         {/* <AlertDialogFooter>
           <Button 
             onClick={handleDelete} 
