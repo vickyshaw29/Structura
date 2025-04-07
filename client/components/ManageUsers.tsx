@@ -50,6 +50,7 @@ const ManageUsers = () => {
         <Button variant={"outline"}>Users ({usersInRoom?.docs?.length})</Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
+          <AlertDialogTitle></AlertDialogTitle>
           <AlertDialogHeader>
             <h2 className="text-lg font-semibold">Users With Access</h2>
             <p className="text-sm text-gray-500">

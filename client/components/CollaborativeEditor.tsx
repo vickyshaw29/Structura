@@ -27,7 +27,7 @@ const CollaborativeEditor = () => {
   },[])
   
   return (
-    <div className="max-w-6xl mx-auto h-screen b">
+    <div className="max-w-6xl mx-auto h-full b">
         <div className="flex items-center gap-2 justify-end mb-10 ">
             {/* Translating document ai */}
             {/* Chat tp document ai */}

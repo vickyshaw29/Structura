@@ -9,7 +9,7 @@ const DocumentPage = () => {
 
   console.log({ params, searchParams });
 
-  return <div className="flex flex-col flex-1 min-h-screen">
+  return <div className="flex flex-col flex-1 ">
     <Document id={params?.id as string}/>
   </div>;
 };
