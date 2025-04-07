@@ -7,6 +7,7 @@ import { LiveblocksYjsProvider } from '@liveblocks/yjs'
 import { Button } from "./ui/button";
 import { MoonIcon, SunIcon } from "lucide-react";
 import BlockNote from "./BlockNote";
+import TranslateDocument from "./TranslateDocument";
 
 const CollaborativeEditor = () => {
   const room = useRoom();
@@ -30,6 +31,7 @@ const CollaborativeEditor = () => {
     <div className="max-w-6xl mx-auto h-full b">
         <div className="flex items-center gap-2 justify-end mb-10 ">
             {/* Translating document ai */}
+            <TranslateDocument doc={doc!}/>
             {/* Chat tp document ai */}
 
             {/* Dark Mode */}
