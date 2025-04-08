@@ -96,8 +96,8 @@ const TranslateDocument = ({ doc }: { doc: Y.Doc }) => {
     <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
       <AlertDialogTrigger asChild>
         <Button variant={"outline"}>
-          <LanguagesIcon />
-          Translate
+          <LanguagesIcon className="hidden md:block"/>
+              Translate
         </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
