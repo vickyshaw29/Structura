@@ -97,7 +97,7 @@ const TranslateDocument = ({ doc }: { doc: Y.Doc }) => {
       <AlertDialogTrigger asChild>
         <Button variant={"outline"}>
           <LanguagesIcon className="hidden md:block"/>
-              Translate
+              <span className="max-md:text-xs">Translate</span>
         </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
