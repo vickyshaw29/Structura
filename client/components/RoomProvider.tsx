@@ -11,7 +11,7 @@ const RoomProvider = ({roomId, children}: {roomId:string, children:React.ReactNo
         cursor:null
     }}
     >
-        <ClientSideSuspense fallback={<LoadingSpinner/>}>
+        <ClientSideSuspense fallback={<LoadingSpinner extendedClassName='md:pl-64'/>}>
             <LiveCursorProvider>
                 {children}
             </LiveCursorProvider>

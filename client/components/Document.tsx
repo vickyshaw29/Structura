@@ -37,7 +37,7 @@ const Document = ({ id }: { id: string }) => {
   }, [data]);
 
   return (
-    <div className="flex-1 h-full bg-white p-4 sm:p-5 md:ml-64 min-h-[90vh]"
+    <div className="flex-1 h-full bg-white p-4 sm:p-5 md:ml-64 max-h-[90vh] overflow-hidden"
     >
       <div className="flex max-w-6xl mx-auto justify-between pb-5">
         <form
@@ -83,7 +83,7 @@ const Document = ({ id }: { id: string }) => {
         <Avatars />
       </div>
 
-      <hr className="pb-10 max-w-6xl mx-auto mt-4" />
+      <hr className="pb-4 md:pb-10 max-w-6xl mx-auto mt-4" />
 
       {/* Collaborative editor */}
       <CollaborativeEditor />

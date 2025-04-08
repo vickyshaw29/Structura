@@ -24,7 +24,7 @@ const SideBarOption = ({href, id}:{href:string; id:string}) => {
           : "hover:bg-gray-100 text-gray-700"
       )}
     >
-      📄 {data.title || "Untitled"}
+       {data.title || "Untitled"}
     </div>
   </Link>
   )

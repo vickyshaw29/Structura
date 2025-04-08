@@ -1,6 +1,6 @@
-const LoadingSpinner = () => {
+const LoadingSpinner = ({extendedClassName}:{extendedClassName?:string}) => {
   return (
-    <div role="status" className="flex items-center justify-center mt-10">
+    <div role="status" className={`flex items-center justify-center mt-10 ${extendedClassName}`}>
       <svg
         aria-hidden="true"
         className="w-16 h-16 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"

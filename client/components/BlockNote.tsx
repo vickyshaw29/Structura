@@ -8,6 +8,8 @@ import "@blocknote/core/fonts/inter.css";
 import "@blocknote/shadcn/style.css"
 import { stringToColor } from '@/lib/stringToColor';
 import { useSelf } from '@liveblocks/react/suspense';
+import { ScrollArea } from "@/components/ui/scroll-area"
+
 
 const BlockNote = ({doc, provider, darkMode}:{doc:Y.Doc, provider:LiveblocksYjsProvider, darkMode:boolean}) => {
   const userInfo = useSelf((me)=>me.info)
@@ -22,13 +24,13 @@ const BlockNote = ({doc, provider, darkMode}:{doc:Y.Doc, provider:LiveblocksYjsP
     }
   })
   return (
-    <div className='relative max-w-6xl mx-auto '>
+    <ScrollArea className='relative h-[80vh] max-w-6xl mx-auto'>
         <BlockNoteView
             className="h-full flex-1 !bg-primary"
             editor={editor}
             theme={darkMode ? "dark" :"light"}
         />
-    </div>
+    </ScrollArea>
   )
 }
 

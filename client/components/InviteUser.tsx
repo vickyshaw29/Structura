@@ -11,6 +11,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { X } from "lucide-react";
 import { FormEvent, useState, useTransition } from "react";
 import { Button } from "./ui/button";
 import { usePathname, useRouter } from "next/navigation";
@@ -50,6 +51,9 @@ const InviteUser = () => {
       </AlertDialogTrigger>
       <AlertDialogContent>
       <AlertDialogTitle></AlertDialogTitle>
+      <Button className="absolute right-0 top-0" variant="ghost" size="icon" onClick={() => setIsOpen(false)}>
+            <X className="w-5 h-5" />
+          </Button>
         {/* <AlertDialogFooter>
           <Button 
             onClick={handleDelete} 

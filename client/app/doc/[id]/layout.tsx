@@ -14,8 +14,6 @@ const DocLayout = async ({
   // Wait for params to be available
   const resolvedParams = await params;
 
-  console.log(resolvedParams, "params from DocLayout");
-
   return (
     <RoomProvider roomId={resolvedParams.id}>
       {children}
