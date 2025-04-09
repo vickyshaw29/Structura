@@ -3,6 +3,9 @@
 import { adminnDb } from "@/firebase-admin";
 import liveblocks from "@/lib/liveblocks";
 import { auth } from "@clerk/nextjs/server" ;
+import puppeteer from 'puppeteer';
+
+
 
 export async function createNewDocument() {
     auth.protect();
@@ -92,3 +95,31 @@ export async function removeUserFromDocument(roomId:string, email:string){
         return {success:false}
     }
 }
+
+
+export async function exportPdfFromHtml(html: string): Promise<string> {
+    const browser = await puppeteer.launch({
+      headless: true,
+      args: ['--no-sandbox', '--disable-setuid-sandbox'],
+    });
+  
+    const page = await browser.newPage();
+    await page.setContent(html, { waitUntil: 'networkidle0' });
+  
+    const pdfBuffer = await page.pdf({
+      format: 'A4',
+      printBackground: true,
+      margin: {
+        top: '20mm',
+        bottom: '20mm',
+        left: '15mm',
+        right: '15mm',
+      },
+    });
+  
+    await browser.close();
+  
+    // ✅ Convert to base64 properly
+    return Buffer.from(pdfBuffer).toString('base64');
+  }
+  
