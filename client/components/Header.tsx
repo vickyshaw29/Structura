@@ -8,10 +8,13 @@ import {
   useUser,
 } from "@clerk/nextjs";
 import Sidebar from "./Sidebar";
-import Breadcrumbs from "./Breadcrumbs";
+// import Breadcrumbs from "./Breadcrumbs";
+import { useRouter } from "next/navigation";
+
 
 const Header = () => {
   const { user } = useUser();
+  const router = useRouter();
 
   return (
     <header className="flex justify-between items-center px-4 min-h-[64px] border-b bg-white shadow-sm">
@@ -23,7 +26,7 @@ const Header = () => {
       {/* Middle section - Title or Welcome message */}
       <div className="flex-1 text-center">
         <SignedIn>
-          <h1 className="text-lg font-semibold">
+          <h1 className="text-lg font-semibold" onClick={()=>router.push('/')}>
             {user?.firstName}
             {`'s`} Space
           </h1>

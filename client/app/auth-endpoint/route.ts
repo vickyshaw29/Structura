@@ -9,7 +9,6 @@ export async function POST(req: NextRequest) {
   
       const { sessionClaims } = await auth();
       const { room } = await req.json();
-      console.log({room})
       if (!sessionClaims?.email) {
         return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
       }
@@ -27,7 +26,6 @@ export async function POST(req: NextRequest) {
       .where("userId", "==", sessionClaims.email)
       .get();
       const userInRoom = usersInRoom.docs.find((doc) => {
-        console.log(doc)
         return doc.id === room
       });
       if (userInRoom?.exists) {

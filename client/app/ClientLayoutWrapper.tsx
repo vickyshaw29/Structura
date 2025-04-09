@@ -15,7 +15,7 @@ export default function ClientLayoutWrapper({ children }: { children: React.Reac
         <div className="hidden md:block">
           <Sidebar />
         </div>
-        <div className="flex-1 p-4 bg-gray-100 overflow-y-auto scrollbar-hide">
+        <div className="flex-1 md:px-4 md:py-4 bg-gray-100 overflow-y-auto scrollbar-hide">
           {children}
         </div>
       </div>
