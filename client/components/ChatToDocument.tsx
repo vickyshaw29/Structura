@@ -45,7 +45,7 @@ const ChatToDocument = ({ doc }: { doc: Y.Doc }) => {
 
         if (res.ok) {
           const { message } = await res.json();
-          console.log(message, "response from cloudflare");
+          // console.log(message, "response from cloudflare");
           setInput("");
           setSummary(message);
         } else {

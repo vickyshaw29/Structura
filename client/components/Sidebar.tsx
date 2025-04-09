@@ -25,6 +25,7 @@ interface RoomDocument extends DocumentData {
 
 const Sidebar = () => {
   const { user } = useUser();
+  const [isOpen, setIsOpen] = useState(false);
   const [groupedData, setGroupedData] = useState<{
     owner: RoomDocument[];
     editor: RoomDocument[];
@@ -74,7 +75,7 @@ const Sidebar = () => {
               My Documents
             </h2>
             {groupedData.owner.map((doc) => (
-              <SideBarOption key={doc.id} id={doc.id} href={`/doc/${doc.id}`} />
+              <SideBarOption key={doc.id} id={doc.id} href={`/doc/${doc.id}`} onClick={() => setIsOpen(false)}/>
             ))}
           </>
         )}
@@ -85,7 +86,7 @@ const Sidebar = () => {
             Shared with me
           </h2>
           {groupedData.editor.map((doc) => (
-            <SideBarOption key={doc.id} id={doc.id} href={`/doc/${doc.id}`} />
+            <SideBarOption key={doc.id} id={doc.id} href={`/doc/${doc.id}`}  onClick={() => setIsOpen(false)}/>
           ))}
         </div>
       )}
@@ -97,10 +98,10 @@ const Sidebar = () => {
       <div className="relative">
         {/* Mobile Sidebar (Drawer) */}
         <div className="md:hidden p-4">
-          <Sheet>
+          <Sheet open={isOpen} onOpenChange={setIsOpen}>
             <SheetTrigger asChild>
               <MenuIcon
-                className="p-2 hover:opacity-70 rounded-lg cursor-pointer"
+                className="absolute -left-2  -top-[5px] p-2 hover:opacity-70 rounded-lg cursor-pointer"
                 size={40}
               />
             </SheetTrigger>

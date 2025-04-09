@@ -14,7 +14,7 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 export const metadata: Metadata = {
-  title: "Notion Clone",
+  title: "Structura",
   description: "A sleek, modern productivity app",
 };
 

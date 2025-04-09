@@ -10,7 +10,6 @@ import BlockNote from "./BlockNote";
 import TranslateDocument from "./TranslateDocument";
 import ChatToDocument from "./ChatToDocument";
 import { DownloadIcon } from "lucide-react";
-import { exportPdfFromHtml } from "@/actions/action";
 import { Loader } from "lucide-react";
 
 
@@ -26,49 +25,86 @@ const CollaborativeEditor = () => {
 
   const downloadPDF = () => {
     if (!blockNoteRef.current) return;
-
-    startTransition(async()=>{
+  
+    startTransition(async () => {
       const rawHTML = await blockNoteRef.current.getHTML();
   
       const fullHTML = `
-        <!DOCTYPE html>
-        <html>
-          <head>
-            <meta charset="utf-8">
-            <title>Document</title>
-            <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
-            <style>
-              * { box-sizing: border-box; }
-              body {
-                font-family: 'Inter', sans-serif;
-                padding: 40px;
-                color: #111;
-              }
-            </style>
-          </head>
-          <body>
-            ${rawHTML}
-          </body>
-        </html>
+      <!DOCTYPE html>
+      <html lang="en">
+        <head>
+          <meta charset="utf-8" />
+          <title>PDF Document</title>
+          <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
+          <style>
+            @font-face {
+              font-family: 'NotoColorEmoji';
+              src: url("https://cdn.jsdelivr.net/npm/twemoji-colr-font@14.0.2/twemoji.woff2") format("woff2");
+            }
+      
+            * {
+              box-sizing: border-box;
+            }
+      
+            html, body {
+              font-family: 'Inter', 'NotoColorEmoji', 'Segoe UI Emoji', sans-serif;
+              font-size: 14px;
+              padding: 40px;
+              margin: 0;
+              color: #111;
+              line-height: 1.6;
+            }
+      
+            h1, h2, h3 {
+              font-weight: 600;
+              margin-top: 1.5em;
+            }
+      
+            img {
+              max-width: 100%;
+              height: auto;
+            }
+          </style>
+        </head>
+        <body>
+          ${rawHTML}
+        </body>
+      </html>
       `;
-    
-      const base64 = await exportPdfFromHtml(fullHTML);
+  
+      const res = await fetch("/api/export-pdf", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ html: fullHTML }),
+      });
+  
+      const data = await res.json();
+      if (!res.ok || !data.base64) {
+        console.log({res}, "Res")
+        console.error("PDF generation failed", data);
+        return;
+      }
+      const base64 = data.base64;
+  
       const byteCharacters = atob(base64);
-      const byteNumbers = new Array(byteCharacters.length).fill(0).map((_, i) => byteCharacters.charCodeAt(i));
+      const byteNumbers = new Array(byteCharacters.length)
+        .fill(0)
+        .map((_, i) => byteCharacters.charCodeAt(i));
       const byteArray = new Uint8Array(byteNumbers);
-      const blob = new Blob([byteArray], { type: 'application/pdf' });
-    
+      const blob = new Blob([byteArray], { type: "application/pdf" });
+  
       const url = window.URL.createObjectURL(blob);
-      const a = document.createElement('a');
+      const a = document.createElement("a");
       a.href = url;
-      a.download = 'document.pdf';
+      a.download = "document.pdf";
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
       window.URL.revokeObjectURL(url);
-    })
-
+    });
   };
+
+
   useEffect(() => {
     const yDoc = new Y.Doc();
     const yProvider = new LiveblocksYjsProvider(room, yDoc);

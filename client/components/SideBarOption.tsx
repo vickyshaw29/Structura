@@ -6,7 +6,7 @@ import { useDocumentData } from "react-firebase-hooks/firestore";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 
-const SideBarOption = ({href, id}:{href:string; id:string}) => {
+const SideBarOption = ({href, id, onClick}:{href:string; id:string, onClick?:()=>void}) => {
   const docRef = doc(db, "documents", id);
   const [data, loading, error] = useDocumentData(docRef);
   const pathname = usePathname();
@@ -15,7 +15,7 @@ const SideBarOption = ({href, id}:{href:string; id:string}) => {
   if(!data) return null ;
 
   return (
-    <Link href={href}>
+    <Link href={href} onClick={onClick}>
     <div
       className={cn(
         "w-full px-3 py-2 rounded-md text-sm font-medium cursor-pointer transition-colors truncate mb-2",

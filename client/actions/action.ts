@@ -3,8 +3,9 @@
 import { adminnDb } from "@/firebase-admin";
 import liveblocks from "@/lib/liveblocks";
 import { auth } from "@clerk/nextjs/server" ;
-import puppeteer from 'puppeteer';
-
+import chromium from '@sparticuz/chromium';
+import puppeteer from 'puppeteer-core';
+import puppeteerBundled from 'puppeteer';
 
 
 export async function createNewDocument() {
@@ -37,7 +38,7 @@ export async function createNewDocument() {
 
 export async function deleteDocument(roomId:string){
     auth.protect();
-    console.log("deleteDocument", roomId);
+    // console.log("deleteDocument", roomId);
     
     try {
         await adminnDb.collection("documents").doc(roomId).delete();
@@ -57,7 +58,6 @@ export async function deleteDocument(roomId:string){
 
 export async function inviteUserToDocument (roomId:string, email:string){
     auth.protect();
-    console.log("inviting user to document", roomId, email);
 
     try {
         await adminnDb
@@ -80,7 +80,6 @@ export async function inviteUserToDocument (roomId:string, email:string){
 
 export async function removeUserFromDocument(roomId:string, email:string){
     auth.protect();
-    console.log("removeUserFromDocument" , roomId, email);
     try {
         await adminnDb
         .collection("users")
@@ -98,28 +97,36 @@ export async function removeUserFromDocument(roomId:string, email:string){
 
 
 export async function exportPdfFromHtml(html: string): Promise<string> {
-    const browser = await puppeteer.launch({
-      headless: true,
-      args: ['--no-sandbox', '--disable-setuid-sandbox'],
-    });
+    try {
+      const isLocal = !process.env.VERCEL;
   
-    const page = await browser.newPage();
-    await page.setContent(html, { waitUntil: 'networkidle0' });
+      const browser = await (isLocal ? puppeteerBundled : puppeteer).launch({
+        args: isLocal ? [] : chromium.args,
+        defaultViewport: isLocal ? null : chromium.defaultViewport,
+        executablePath: isLocal
+          ? undefined
+          : await chromium.executablePath(),
+        headless: true,
+      });
   
-    const pdfBuffer = await page.pdf({
-      format: 'A4',
-      printBackground: true,
-      margin: {
-        top: '20mm',
-        bottom: '20mm',
-        left: '15mm',
-        right: '15mm',
-      },
-    });
+      const page = await browser.newPage();
+      await page.setContent(html, { waitUntil: 'networkidle0' });
   
-    await browser.close();
+      const pdfBuffer = await page.pdf({
+        format: 'A4',
+        printBackground: true,
+        margin: {
+          top: '20mm',
+          bottom: '20mm',
+          left: '15mm',
+          right: '15mm',
+        },
+      });
   
-    // ✅ Convert to base64 properly
-    return Buffer.from(pdfBuffer).toString('base64');
+      await browser.close();
+      return Buffer.from(pdfBuffer).toString('base64');
+    } catch (err) {
+      console.error('Error inside exportPdfFromHtml:', err);
+      throw err;
+    }
   }
-  

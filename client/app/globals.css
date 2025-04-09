@@ -254,4 +254,8 @@ body {
   .bn-collaboration-cursor__label{
     color: white !important; 
   }
+
+  .bn-editor {
+    padding-inline: 36px !important;
+  }
 }

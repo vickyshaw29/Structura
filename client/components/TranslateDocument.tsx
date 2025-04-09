@@ -59,8 +59,6 @@ const TranslateDocument = ({ doc }: { doc: Y.Doc }) => {
     startTransition(async () => {
       try {
         const documentData = doc.get("document-store").toJSON();
-
-        console.log({ documentData: documentData }, "documentData");
         const res = await fetch(
           `${process.env.NEXT_PUBLIC_BASE_URL}/translateDocument`,
           {
@@ -77,7 +75,6 @@ const TranslateDocument = ({ doc }: { doc: Y.Doc }) => {
 
         if (res.ok) {
           const data = await res.json();
-          console.log(data, "response from cloudflare");
           setSummary(data.translated_text);
 
         } else {
