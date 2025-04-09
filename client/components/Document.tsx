@@ -37,56 +37,60 @@ const Document = ({ id }: { id: string }) => {
   }, [data]);
 
   return (
-    <div className="flex-1 h-full bg-white p-4 sm:p-5 md:ml-64 max-h-[90vh] overflow-hidden"
-    >
-      <div className="flex max-w-6xl mx-auto justify-between pb-5">
-        <form
-          className="flex flex-1 items-center gap-4"
-          onSubmit={updateTitle}
-        >
-          {/* Update title */}
-          <Input
-            value={inputValue}
-            onChange={(e) => setInputValue(e.target.value)}
-            className=""
-          />
-          <Button type="submit" disabled={isUpdating}>
-            {isUpdating ? "Updating" : "Update"}
-          </Button>
-          {/* if isOwner && invideUser, Delete Document */}
-          <div className=" hidden md:flex space-x-2">
-            {isOwner && (
-              <>
-                {/* Invite User */}
-                <InviteUser />
-                {/* Delete Document */}
-                <DeleteDocument />
-              </>
-            )}
-          </div>
-        </form>
-      </div>
-      <div className=" md:hidden flex justify-between  mb-4">
-        {isOwner && (
-          <>
-            {/* Invite User */}
-            <InviteUser />
-            {/* Delete Document */}
-            <DeleteDocument />
-          </>
-        )}
-      </div>
-      <div className="flex max-w-6xl mx-auto justify-between items-center mb-5 max-md:gap-10">
-        {/* ManageUsers */}
-        <ManageUsers />
-        {/* Avatars */}
-        <Avatars />
-      </div>
+    <div className="flex-1 h-full bg-white p-4 sm:p-5 md:ml-64 ">
+      {/* it should be a floating header and content which is  CollaborativeEditor should go below it i mean should scroll below it*/}
+      <div className="sticky top-0 z-10 bg-white pb-4 sm:pb-5">
+        <div className="flex max-w-6xl mx-auto justify-between pb-5">
+          <form
+            className="flex flex-1 items-center gap-4"
+            onSubmit={updateTitle}
+          >
+            {/* Update title */}
+            <Input
+              value={inputValue}
+              onChange={(e) => setInputValue(e.target.value)}
+              className=""
+            />
+            <Button type="submit" disabled={isUpdating}>
+              {isUpdating ? "Updating" : "Update"}
+            </Button>
+            {/* if isOwner && invideUser, Delete Document */}
+            <div className=" hidden md:flex space-x-2">
+              {isOwner && (
+                <>
+                  {/* Invite User */}
+                  <InviteUser />
+                  {/* Delete Document */}
+                  <DeleteDocument />
+                </>
+              )}
+            </div>
+          </form>
+        </div>
+        <div className=" md:hidden flex justify-between  mb-4">
+          {isOwner && (
+            <>
+              {/* Invite User */}
+              <InviteUser />
+              {/* Delete Document */}
+              <DeleteDocument />
+            </>
+          )}
+        </div>
+        <div className="flex max-w-6xl mx-auto justify-between items-center mb-5 max-md:gap-10">
+          {/* ManageUsers */}
+          <ManageUsers />
+          {/* Avatars */}
+          <Avatars />
+        </div>
 
-      <hr className="pb-4 md:pb-10 max-w-6xl mx-auto mt-4" />
+        <hr className="pb-4 md:pb-10 max-w-6xl mx-auto mt-4" />
+      </div>
 
       {/* Collaborative editor */}
-      <CollaborativeEditor />
+      <div className="max-h-[calc(100vh-200px)] sm:px-2">
+        <CollaborativeEditor />
+      </div>
     </div>
   );
 };

@@ -45,7 +45,7 @@ const BlockNote = forwardRef(
     
 
     return (
-      <ScrollArea className="relative h-[80vh] max-w-6xl mx-auto">
+      <ScrollArea className="relative h-[80vh] max-w-6xl mx-auto pb-50">
         <BlockNoteView
           className="h-full flex-1 !bg-primary"
           editor={editor}
