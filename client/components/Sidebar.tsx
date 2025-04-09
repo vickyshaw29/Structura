@@ -9,12 +9,8 @@ import {
   SheetHeader,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { useUser } from "@clerk/nextjs";
-import {
-  collection,
-  DocumentData,
-  query,
-} from "firebase/firestore";
+import { SignedIn, useUser } from "@clerk/nextjs";
+import { collection, DocumentData, query } from "firebase/firestore";
 import { db } from "@/firebase";
 import { useEffect, useState } from "react";
 import SideBarOption from "./SideBarOption";
@@ -48,15 +44,18 @@ const Sidebar = () => {
     const grouped = data.docs.reduce<{
       owner: RoomDocument[];
       editor: RoomDocument[];
-    }>((acc, curr) => {
-      const roomData = curr.data() as RoomDocument;
-      if (roomData.role === "owner") {
-        acc.owner.push({ id: curr.id, ...roomData });
-      } else {
-        acc.editor.push({ id: curr.id, ...roomData });
-      }
-      return acc;
-    }, { owner: [], editor: [] });
+    }>(
+      (acc, curr) => {
+        const roomData = curr.data() as RoomDocument;
+        if (roomData.role === "owner") {
+          acc.owner.push({ id: curr.id, ...roomData });
+        } else {
+          acc.editor.push({ id: curr.id, ...roomData });
+        }
+        return acc;
+      },
+      { owner: [], editor: [] }
+    );
 
     setGroupedData(grouped);
   }, [data]);
@@ -64,7 +63,7 @@ const Sidebar = () => {
   const SidebarContent = (
     <div className="space-y-6 p-4">
       <NewDocumentButton />
-       <div className="space-y-2">
+      <div className="space-y-2">
         {groupedData.owner.length === 0 ? (
           <h2 className="text-gray-500 text-sm font-semibold">
             No documents found
@@ -94,29 +93,30 @@ const Sidebar = () => {
   );
 
   return (
-    <div className="relative">
-      {/* Mobile Sidebar (Drawer) */}
-      <div className="md:hidden p-4">
-        <Sheet>
-          <SheetTrigger asChild>
-            <MenuIcon className="p-2 hover:opacity-70 rounded-lg cursor-pointer" size={40} />
-          </SheetTrigger>
-          <SheetContent side="left">
-            <SheetHeader />
-            <ScrollArea className="h-full">
-              {SidebarContent}
-            </ScrollArea>
-          </SheetContent>
-        </Sheet>
-      </div>
+    <SignedIn>
+      <div className="relative">
+        {/* Mobile Sidebar (Drawer) */}
+        <div className="md:hidden p-4">
+          <Sheet>
+            <SheetTrigger asChild>
+              <MenuIcon
+                className="p-2 hover:opacity-70 rounded-lg cursor-pointer"
+                size={40}
+              />
+            </SheetTrigger>
+            <SheetContent side="left">
+              <SheetHeader />
+              <ScrollArea className="h-full">{SidebarContent}</ScrollArea>
+            </SheetContent>
+          </Sheet>
+        </div>
 
-      {/* Desktop Sidebar */}
-      <aside className="hidden md:flex md:flex-col md:w-64 md:h-screen md:fixed md:top-0 md:left-0  bg-white">
-        <ScrollArea className="h-full w-full">
-          {SidebarContent}
-        </ScrollArea>
-      </aside>
-    </div>
+        {/* Desktop Sidebar */}
+        <aside className="hidden md:flex md:flex-col md:w-64 md:h-screen md:fixed md:top-0 md:left-0  bg-white">
+          <ScrollArea className="h-full w-full">{SidebarContent}</ScrollArea>
+        </aside>
+      </div>
+    </SignedIn>
   );
 };
 

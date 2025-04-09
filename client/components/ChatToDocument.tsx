@@ -64,7 +64,7 @@ const ChatToDocument = ({ doc }: { doc: Y.Doc }) => {
       <AlertDialogTrigger asChild>
         <Button variant={"outline"}>
           <MessageCircleCode />
-          ChatToDocument
+          <span className="max-md:text-xs">ChatToDocument</span>
         </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>

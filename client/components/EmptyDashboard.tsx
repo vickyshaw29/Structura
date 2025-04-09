@@ -1,11 +1,13 @@
 "use client";
 
-import { SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
+import { SignedOut, SignInButton, useAuth, UserButton } from "@clerk/nextjs";
+import { auth } from "@clerk/nextjs/server";
 import Image from "next/image";
 
 export default function EmptyDashboard() {
+  const { isSignedIn } = useAuth()
   return (
-    <div className="flex flex-col items-center justify-center text-center p-6 h-full md:ml-64">
+    <div className={`flex flex-col items-center justify-center text-center p-6 h-full ${isSignedIn && 'md:ml-64'}`}>
       <Image
         src="/illustration-dashboard.svg"
         alt="Empty Dashboard"
