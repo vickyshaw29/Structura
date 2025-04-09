@@ -1,4 +1,11 @@
+
+
+
+https://github.com/user-attachments/assets/f83318b4-bb64-4ade-95d1-bf37abec0f6a
+
+
 # Structura
+🔗 **Live Demo:** [https://structura-two.vercel.app](https://structura-two.vercel.app)
 
 **Structura** is a powerful, collaborative, and real-time note-taking app inspired by Notion. It supports rich text editing, multi-user collaboration, and seamless authentication with blazing-fast performance and modern UI.
 
