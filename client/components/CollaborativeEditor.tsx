@@ -80,7 +80,6 @@ const CollaborativeEditor = () => {
   
       const data = await res.json();
       if (!res.ok || !data.base64) {
-        console.log({res}, "Res")
         console.error("PDF generation failed", data);
         return;
       }
